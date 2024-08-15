@@ -1,9 +1,9 @@
 const User=require("../model/User.model");
 exports.register = async(req,res)=>{
     try {
-        const{name ,email, password, phoneNumber} = req.body;
-        // console.log(name, email, password);
-        if(password.length<8) return res.status(401).json({message: " password length must be atleast than 8 characters"});
+        const { name, email, password, phoneNumber } = req.body;
+        console.log(name, email, password, phoneNumber);
+        if ( password && password.length < 8) return res.status(401).json({ message: "password length must be at least 8 characters" });
         
         
         let user = await User.findOne({email}).select("+password");
@@ -79,6 +79,27 @@ exports.login = async (req, res)=>{
         });
     }
 }
+
+exports.getUser = async  (req, res)=>{
+    try {
+        const user = await User.findOne(req.user._id);
+        if(!user){
+            return res.status(404).json({
+                message:"User not found",
+                success: false
+            });
+        }
+        res.json(user);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message:error.message,
+            success: false
+        });
+        
+    }
+}
+
 exports.logout = async (req, res) => {
     try {
       return res.status(200).cookie("token", { maxAge: 0 }).json({

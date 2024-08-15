@@ -4,7 +4,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from '@/components/ui/input';
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form';
-import { zodResolver } from 'react-hook-form';
+import { zodResolver } from "@hookform/resolvers/zod";
 import {z} from 'zod';
 
 const formSchema = z.object({
