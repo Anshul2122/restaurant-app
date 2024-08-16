@@ -1,15 +1,17 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import MainNav from './MainNav'
 import MobileNav from './MobileNav'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Header = () => {
+    const {user} = useSelector(store=>store.auth);
   return (
-    <div className='border-b-2 border-b-green-600 py-6'>
+    <div className='border-b-2 border-b-green-600 py-6 bg-green-500 text-white'>
         <div className='container mx-auto flex justify-between items-center'>
-            <Link to='/' className='text-3xl font-bold tracking-tight text-green-600'>QuickFeast</Link>
-            <div className='md:hidden'><MainNav/></div>
-            <div className='hidden md:block'><MobileNav/></div>
+            <Link to='/' className='text-3xl font-bold tracking-tight text-white hover:underline'>QuickFeast</Link>
+            <div className='hidden md:block'><MainNav user={user}/></div>
+            <div className= 'md:hidden'><MobileNav user={user}/></div>
         </div>
     </div>
   )

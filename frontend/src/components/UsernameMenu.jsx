@@ -4,33 +4,58 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Link } from 'react-router-dom';
 import { Separator } from './ui/separator';
 import { Button } from './ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { Avatar, AvatarImage } from './ui/avatar';
+import { FaUserCircle } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux'
+import axios from 'axios'
+import { USER_API_END_POINT } from '@/utils/contants'
+import { setUser } from '@/redux/authSlice'
 
 
-const UsernameMenu = () => {
+const UsernameMenu = ({user, src}) => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const logoutHandler = async () => {
+        try {
+          console.log('clicked');
+          
+          const res = await axios.get(`${USER_API_END_POINT}/logout`, {
+            withCredentials: true,
+          });
+          if (res.data.success) {
+            dispatch(setUser(null));
+            navigate("/login");
+          }
+        } catch (error) {
+          console.log(error);
+          
+        }
+      };
     // const user = true;
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex items-center px-3 font-bold hover:text-green-600">
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-          <AvatarFallback>CN</AvatarFallback>
+      <DropdownMenuTrigger className="flex items-center px-3 font-bold text-white">
+        <Avatar className='flex items-center justify-center'>
+          {src ? (
+            <AvatarImage src={src} alt="@shadcn" />
+          ) : (
+            <FaUserCircle size={32}  /> // Size can be adjusted
+          )}
         </Avatar>
-        <span className="text-green-500 cursor-pointer">
-          anshulmakhija125@gmail.com
-        </span>
+        <span className="text-white cursor-pointer mx-2">{user?.name}</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem>
-          <Link to="/user-profile" className="font-bold hover:text-green-600">
-            User Profile
+          <Link to="/user-profile" className="font-bold hover:text-green-900">
+            Profile
           </Link>
         </DropdownMenuItem>
         <Separator />
         <DropdownMenuItem>
           <Button
-            onClick={() => logout()}
-            className="flex flex-1 font-bold bg-green-600"
+            onClick={logoutHandler}
+            className="flex flex-1 font-bold bg-green-600 hover:bg-green-900"
           >
             Logout
           </Button>

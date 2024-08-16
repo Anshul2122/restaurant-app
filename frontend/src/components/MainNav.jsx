@@ -3,12 +3,11 @@ import { Button } from './ui/button'
 import { useNavigate } from 'react-router-dom';
 import UsernameMenu from './UsernameMenu';
 
-const MainNav = () => {
+const MainNav = ({user}) => {
     const navigate = useNavigate();
-    const user = false;
   return (
     <span className='flex space-x-2 items-center'>
-        {user? <UsernameMenu/> :
+        {user? <UsernameMenu user={user}/> :
         <Button onClick={()=>navigate('/login')} className='bg-green-600 hover:bg-green-900'>Login</Button>
         }
     </span>

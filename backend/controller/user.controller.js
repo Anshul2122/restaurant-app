@@ -113,7 +113,7 @@ exports.logout = async (req, res) => {
 
 exports.update = async (req, res)=>{
     try {
-        const {address, city} = req.body;
+        const {address, city, name, email} = req.body;
         
         let user = await User.findById(req.user._id);
         if(!user){
@@ -124,6 +124,8 @@ exports.update = async (req, res)=>{
         }
         user.address = address;
         user.city = city;
+        user.name = name;
+        user.email = email;
 
         await user.save();
 
@@ -133,6 +135,7 @@ exports.update = async (req, res)=>{
             email: user.email,
             address: user.address,
             city: user.city,
+            phoneNumber:user.phoneNumber,
           };
         return res.status(200).json({
             message: "User updated successfully",

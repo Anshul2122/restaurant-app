@@ -1,18 +1,12 @@
 import UserProfileForm from '@/forms/user-profile-form/UserProfileForm';
-import React from 'react'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 
 const UserProfilePage = () => {
-    const {currentUser, isLoading:isGetLoading} = useGetMyUser();
-    const {updateUser, isLoading:isUpdateLoading} = useUpdateMyUser(); 
-
-    if(isGetLoading) {
-        return <span>loading...</span>
-    }
-    if(!currentUser) {
-        return <span>unable to load user profile</span>
-    }
+    const {user, loading} = useSelector(store=>store.auth);
+    
   return (
-    <UserProfileForm currentUser = {currentUser} onSave={updateUser} isLoading={isUpdateLoading}/>
+    <UserProfileForm user = {user}  loading={loading}/>
   )
 }
 

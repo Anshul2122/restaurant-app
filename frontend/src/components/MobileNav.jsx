@@ -6,21 +6,20 @@ import { useNavigate } from 'react-router-dom'
 import MobileNavLinks from './MobileNavLinks'
 import { Avatar, AvatarImage } from './ui/avatar'
 import { FaUserCircle } from "react-icons/fa";
-import { Menu } from 'lucide-react'
+import { Menu } from 'lucide-react';
 
-const MobileNav = ({src}) => {
+const MobileNav = ({src, user}) => {
     const navigate = useNavigate();
-    const user = false;
   return (
     <Sheet>
       <></>
       <SheetTrigger>
-        <Menu className="text-green-600" />
+        <Menu className="text-white" />
       </SheetTrigger>
       <SheetContent className="space-y-3">
         <SheetTitle>
           {user ? (
-            <span className="flex items-center font-bold gap-2 text-green-600 cursor-pointer">
+            <span className="flex items-center font-bold gap-2 text-green-700 cursor-pointer">
               {" "}
               <Avatar>
                 {src ? (
@@ -29,7 +28,7 @@ const MobileNav = ({src}) => {
                   <FaUserCircle size={32} /> // Size can be adjusted
                 )}
               </Avatar>{" "}
-              anshulmakhija125@gmail.com
+              {user?.name}
             </span>
           ) : (
             <span>Welcome to QuickFeast.com! </span>
