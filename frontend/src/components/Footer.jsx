@@ -29,7 +29,7 @@ const Footer = () => {
             </div>
             <div>
               <p className="text-md font-semibold tracking-widest text-white uppercase">Help</p>
-              <ul class="text-sm mt-3 space-y-4">
+              <ul className="text-sm mt-3 space-y-4">
                 <li>Customer Support</li>
                 <li>Delivery Details</li>
                 <li>Terms & Conditions</li>
@@ -38,9 +38,9 @@ const Footer = () => {
             </div>
           </div>
 
-          <hr class="mt-2 mb-10 border-gray-200" />
+          <hr className="mt-2 mb-10 border-gray-200" />
 
-          <p class="text-sm text-center text-white">
+          <p className="text-sm text-center text-white">
             © Copyright 2024, All Rights Reserved
           </p>
         </div>

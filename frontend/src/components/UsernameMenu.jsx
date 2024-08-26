@@ -46,9 +46,12 @@ const UsernameMenu = ({user, src}) => {
         <span className="text-white cursor-pointer mx-2">{user?.name}</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem>
+        <DropdownMenuItem className='flex flex-col gap-2'>
           <Link to="/user-profile" className="font-bold hover:text-green-900">
             Profile
+          </Link>
+          <Link to="/UserRestaurant" className="font-bold hover:text-green-900">
+            My restaurant
           </Link>
         </DropdownMenuItem>
         <Separator />

@@ -1,3 +1,4 @@
+import { Toaster } from 'react-hot-toast'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 import Hero from '../components/Hero'
@@ -10,8 +11,9 @@ const Layout = ({children, showHero=false}) => {
         {showHero && <Hero/>}
         <div>{children}</div>
         <Footer/>
+        <Toaster position="top-right"/>
     </div>
   )
 }
 
-export default Layout
+export default Layout;

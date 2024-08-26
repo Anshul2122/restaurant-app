@@ -39,12 +39,21 @@ const MobileNav = ({src, user}) => {
           {user ? (
             <MobileNavLinks />
           ) : (
-            <Button
+            <div className='flex gap-3 flex-col'>
+              <Button
               onClick={() => navigate("/login")}
               className="flex-1 font-bold bg-green-600"
             >
               Login
             </Button>
+            <Button
+              onClick={() => navigate("/register")}
+              className="flex-1 font-bold bg-green-600"
+            >
+              Register
+            </Button>
+            </div>
+          
           )}
         </SheetDescription>
       </SheetContent>

@@ -1,9 +1,14 @@
 const express = require('express');
-//importing routes
 
-const user = require('./routes/user.route');
+
+
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+
+//importing routes
+const user = require('./routes/user.route');
+const Myrestaurant = require('./routes/MyRestaurant.route')
+const restaurant = require('./routes/restaurant.route');
 
 const app = express();
 
@@ -39,5 +44,7 @@ app.use((req, res, next) => {
 
 // user routes
 app.use('/api/v1/user', user);
+app.use('/api/v1/my/restaurant', Myrestaurant);
+app.use('/api/restaurant',restaurant);
 
 module.exports = app;

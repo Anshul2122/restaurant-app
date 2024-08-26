@@ -1,15 +1,16 @@
 import React from 'react'
 import landingImage from "../assets/landing.png"
 import appDownloadImage from "../assets/appDownload.png"
+import SearchBar from '@/components/SearchBar';
 
 const HomePage = () => {
   return (
-    <div className="flex flex-col gap-12">
-      <div className="bg-white rounded-lg shadow-md py-8 flex flex-col gap-5 text-center -mt-16">
-        <h1 className="text-5xl font-bold tracking-tight text-green-600 z-10">
+    <div className="flex flex-col  gap-12 ">
+      <div className="bg-white rounded-lg shadow-md  flex flex-col gap-5 text-center -mt-16 ">
+        <h1 className="text-5xl m-1 font-bold tracking-tight text-white z-10 ">
           Tuck into takeway today
         </h1>
-        <span className="text-xl text-green-600"> Food is just a click away</span>
+        <span className="text-xl text-green-600 mb-6"> Food is just a click away</span>
       </div>
       <div className='grid md:grid-cols-2 gap-2'>
         <img src={landingImage} alt="landing-image" />

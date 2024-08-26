@@ -1,6 +1,6 @@
 import LoadingButton from '@/components/LoadingButton';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
@@ -11,6 +11,7 @@ import { setUser } from '@/redux/authSlice';
 import { USER_API_END_POINT } from '@/utils/contants';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const formSchema = z.object({
     email:z.string().optional(),
@@ -39,13 +40,15 @@ const UserProfileForm = ({user}) => {
             });
             if(res.data.success){
                 dispatch(setUser(res.data.user));
+                toast.success("profile updated successfully")
                 navigate('/')
                 
             }
         } catch(error){
             console.log(error);
+            toast.error("Failed to update profile")
         } finally{
-            dispatch(setLoading(false));
+            setLoading(false);
         }
     }
     useEffect(()=>{
@@ -136,9 +139,9 @@ const UserProfileForm = ({user}) => {
             <Button
               type="submit"
               variant="outline"
-              className="bg-green-600 hover:bg-green-900 "
+              className="bg-green-600 hover:bg-green-900 text-white hover:text-white "
             >
-              Submit
+              Update
             </Button>
           )}
         </form>

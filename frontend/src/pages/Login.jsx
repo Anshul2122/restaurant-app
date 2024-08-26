@@ -7,6 +7,7 @@ import { USER_API_END_POINT } from '@/utils/contants'
 import axios from 'axios'
 import { Loader2 } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -35,12 +36,13 @@ const Login = () => {
         withCredentials: true,
       });
       if (res.data.success) {
-        console.log(12);
         dispatch(setUser(res.data.user));
+        toast.success("welcome back");
         navigate("/");
       }
     } catch (error) {
       console.error(error);
+      toast.error("Invalid email or password");
       // Implement error handling for user feedback (e.g., state for error message)
     } finally {
       dispatch(setLoading(false));

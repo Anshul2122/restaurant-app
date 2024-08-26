@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 const Header = () => {
     const {user} = useSelector(store=>store.auth);
   return (
-    <div className='border-b-2 border-b-green-600 py-6 bg-green-500 text-white'>
+    <div className='border-b-2 border-b-green-600 py-6 bg-green-600 text-white'>
         <div className='container mx-auto flex justify-between items-center'>
             <Link to='/' className='text-3xl font-bold tracking-tight text-white hover:underline'>QuickFeast</Link>
             <div className='hidden md:block'><MainNav user={user}/></div>

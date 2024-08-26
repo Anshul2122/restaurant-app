@@ -7,6 +7,7 @@ import { USER_API_END_POINT } from '@/utils/contants'
 import axios from 'axios'
 import { Loader2 } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -43,9 +44,12 @@ const Register = () => {
       });
       if(res.data.success){
         navigate('/');
+        toast.success('registered successfully')
+        
       }
     } catch (error) {
       console.log(error);
+      toast.error('Failed to register')
     }
     finally{
       dispatch(setLoading(false));
@@ -53,7 +57,6 @@ const Register = () => {
     useEffect(()=>{
       if(user){
         console.log(user);
-        
         navigate('/');
       }
     },[user]);
