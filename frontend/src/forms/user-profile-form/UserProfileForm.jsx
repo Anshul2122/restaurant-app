@@ -3,149 +3,140 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import React, { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form';
-import { zodResolver } from "@hookform/resolvers/zod";
-import {z} from 'zod';
 import { useDispatch } from 'react-redux';
-import { setUser } from '@/redux/authSlice';
+import { setLoading } from '@/redux/authSlice';
 import { USER_API_END_POINT } from '@/utils/contants';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { Label } from '@/components/ui/label';
+import { Loader2 } from 'lucide-react';
 
-const formSchema = z.object({
-    email:z.string().optional(),
-    name:z.string().min(4, "name is required"),
-    address:z.string().min(4, "address is required"),
-    city:z.string().min(4, "city is required"),
-})
 
-const UserProfileForm = ({user}) => {
-    const form = useForm({
-        resolver: zodResolver(formSchema),
-        defaultValues: user,
-    });
-    const dispatch = useDispatch();
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate(); 
+const UserProfileForm = ({user, loading}) => {
+  const [input, setInput] = useState({
+    name:user.name,
+    email:user.email,
+    address:user.address,
+    city:user.city,
+    file:"",
+    phoneNumber:user.phoneNumber
+  });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const changeEventHandler = (e) =>{
+    setInput({...input, [e.target.name]:e.target.value});
+  };
 
-    const submitHandler = async(e)=>{
-        try{
-            e.preventDefault();
-            console.log("clicked")
-            // dispatch(setLoading(true));
-            const updatedData = form.getValues();
-            const res = await axios.put(`${USER_API_END_POINT}/update`, updatedData, {
-                withCredentials: true,
-            });
-            if(res.data.success){
-                dispatch(setUser(res.data.user));
-                toast.success("profile updated successfully")
-                navigate('/')
-                
-            }
-        } catch(error){
-            console.log(error);
-            toast.error("Failed to update profile")
-        } finally{
-            setLoading(false);
-        }
+  const changeFileHandler = (e)=>{
+    setInput({...input, file:e.target.files?.[0]});
+  };
+
+  const submitHandler = async(e)=>{
+    e.preventDefault();
+    const formData = new FormData();
+    if(input.name) {formData.append('name', input.name);}
+    if(input.email) {formData.append("email", input.email);}
+    if(input.address){formData.append("address", input.address);}
+    if(input.city){formData.append("city", input.city);}
+    if(input.file){ formData.append("file", input.file);}
+    console.log(input);
+
+    try {
+      e.preventDefault();
+      console.log("clicked");
+      dispatch(setLoading(true));
+      const res = await axios.put(`${USER_API_END_POINT}/update`, formData, {
+        headers: {
+          'Content-Type':'multipart/form-data',
+        },
+        withCredentials: true,
+      });
+      if(res.data.success){
+        navigate('/');
+        console.log(res.data);
+        toast.success('Profile updated successfully')
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
     }
-    useEffect(()=>{
-        form.reset(user);
-    }, [user, form]);
+    finally {
+      dispatch(setLoading(false));
+    }
+  }
+    // useEffect(()=>{
+    //     if(user){
+    //       navigate('/');
+    //     }
+    // }, []);
 
 
   return (
-    <div className='flex items-center justify-center w-[100%] mx-auto '>
-      <Form {...form}>
-        <form
-          onSubmit={submitHandler}
-          className="space-t-4  bg-gray-50 shadow-lg rounded-lg md:p-10 my-5 w-2/3 px-5 pb-5"
-        >
-          <div className='flex items-center' >
-            <h2 className="text-2xl font-bold"> User profile form</h2>
-          </div>
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <Input {...field}/>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="flex flex-col md:flex-row gap-4 my-4">
-            <FormField
-              control={form.control}
-              name="address"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Address</FormLabel>
-                  <FormControl>
-                    <Input {...field}/>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+    <div className='flex items-center justify-center w-[100%]  '>
+      <form onSubmit={submitHandler}
+      className="w-1/2 border border-gray-200 rounded-md p-4 my-10 shadow-2xl">
+        <div className="my-2 ">
+            <Label >Full Name</Label>
+            <Input
+              type="text"
+              placeholder="Enter your name"
+              value={input.name}
+              name="fullname"
+              onChange={changeEventHandler}
             />
-            <FormField
-              control={form.control}
+            <Label>Email</Label>
+            <Input
+              type="email"
+              placeholder="Enter your email"
+              value={input.email}
+              name="email"
+              onChange={changeEventHandler}
+            />
+            <Label>Phone </Label>
+            <Input
+              type="text"
+              placeholder="Enter your phone number"
+              value={input.phoneNumber}
+              disabled
               name="phoneNumber"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>phone Number</FormLabel>
-                  <FormControl>
-                    <Input disabled  {...field}/>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              onChange={changeEventHandler}
             />
-            <FormField
-              control={form.control}
+            <Label>Address </Label>
+            <Input
+              type="text"
+              placeholder="Enter your phone number"
+              value={input.address}
+              name="address"
+              onChange={changeEventHandler}
+            />
+            <Label>City </Label>
+            <Input
+              type="text"
+              placeholder="Enter your phone number"
+              value={input.city}
               name="city"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>City</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              onChange={changeEventHandler}
             />
+            <Label>Profile</Label>
+              <Input
+                accept="image/*"
+                type="file"
+                className="cursor-pointer"
+                onChange={changeFileHandler}
+              />
           </div>
           {loading ? (
-            <LoadingButton/>
-          ) : (
-            <Button
-              type="submit"
-              variant="outline"
-              className="bg-green-600 hover:bg-green-900 text-white hover:text-white "
-            >
+            <Button>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              loading...
+            </Button>
+            ) : (
+            <Button type="submit" className="bg-green-600 hover:bg-green-900">
               Update
             </Button>
-          )}
-        </form>
-      </Form>
+          )} 
+      </form>
     </div>
   );
 }

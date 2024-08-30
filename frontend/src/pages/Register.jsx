@@ -16,7 +16,7 @@ const Register = () => {
     name:"",
     email:"",
     password:"",
-    phoneNumber:""
+    phoneNumber:"",
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -24,7 +24,6 @@ const Register = () => {
   const changeEventHandler = (e)=>{
     setInput({...input, [e.target.name]:e.target.value});
   }
-
   const submitHandler = async (e)=>{
     e.preventDefault();
     const formData = new FormData();

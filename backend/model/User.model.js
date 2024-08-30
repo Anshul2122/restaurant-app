@@ -16,8 +16,13 @@ const userSchema = new mongoose.Schema({
         minlength: [10],
     },
     avatar:{
-        public_id:String,
-        url:String
+        public_id: {
+            type: String,
+            required: true,
+        },
+        url:{
+            type: String,
+        },
     },
     email:{
         type: String,
@@ -38,7 +43,6 @@ const userSchema = new mongoose.Schema({
     city:{
         type: String,
     },
-
 });
 
 userSchema.pre('save', async function(next){

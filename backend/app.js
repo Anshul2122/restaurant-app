@@ -1,7 +1,5 @@
 const express = require('express');
 
-
-
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
@@ -26,6 +24,8 @@ const corsOptions = {
     method:["GET", "POST", "PUT", "DELETE"],
 }
 app.use(cors(corsOptions));
+
+
 
 // Log each request route
 app.use((req, res, next) => {
