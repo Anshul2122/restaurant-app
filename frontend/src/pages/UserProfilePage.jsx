@@ -1,5 +1,5 @@
 import UserProfileForm from '@/forms/user-profile-form/UserProfileForm';
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux';
 
 const UserProfilePage = () => {

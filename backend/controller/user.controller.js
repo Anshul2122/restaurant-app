@@ -157,6 +157,7 @@ exports.logout = async (req, res) => {
                 url:myCloud.secure_url,
             }
         }
+        console.log(user.avatar.url);
 
         // Save the updated user
         await user.save();

@@ -52,14 +52,10 @@ const SearchBar = ({onSubmit, onReset,placeholder, searchQuery}) => {
             </FormItem>)}
           />
           {form.formState.isDirty && (
-            <Button onClick={handleReset} type='button'  className='rounded-full bg-inherit hover:bg-inherit font-extrabold absolute right-[88px]'>
+            <Button onClick={handleReset} type='button'  className='rounded-full bg-inherit hover:bg-inherit font-extrabold absolute right-[490px]'>
               <MdCancel className='text-gray-300 text-xl' />
             </Button>)
            }
-           <Button type='submit' className="rounded-full hover:bg-green-800 sm:bg-white  bg-green-500  absolute right-3" >
-            <Search strokeWidth={2.5}
-          size={30}
-          className=" text-white mr-2  sm:text-green-600 " /></Button>
             
         </form>
       </Form>

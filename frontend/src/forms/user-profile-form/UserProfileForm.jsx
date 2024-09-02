@@ -4,7 +4,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { setLoading } from '@/redux/authSlice';
+import { setLoading, setUrl } from '@/redux/authSlice';
 import { USER_API_END_POINT } from '@/utils/contants';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -44,7 +44,6 @@ const UserProfileForm = ({user, loading}) => {
 
     try {
       e.preventDefault();
-      console.log("clicked");
       dispatch(setLoading(true));
       const res = await axios.put(`${USER_API_END_POINT}/update`, formData, {
         headers: {
@@ -52,9 +51,10 @@ const UserProfileForm = ({user, loading}) => {
         },
         withCredentials: true,
       });
+      
+      dispatch(setUrl(res.data.user.avatar.url))
       if(res.data.success){
-        navigate('/');
-        console.log(res.data);
+        navigate("/");
         toast.success('Profile updated successfully')
       }
     } catch (error) {
@@ -84,6 +84,7 @@ const UserProfileForm = ({user, loading}) => {
               value={input.name}
               name="fullname"
               onChange={changeEventHandler}
+              className='focus-visible:ring-0'
             />
             <Label>Email</Label>
             <Input
@@ -92,6 +93,7 @@ const UserProfileForm = ({user, loading}) => {
               value={input.email}
               name="email"
               onChange={changeEventHandler}
+              className='focus-visible:ring-0'
             />
             <Label>Phone </Label>
             <Input
@@ -101,6 +103,7 @@ const UserProfileForm = ({user, loading}) => {
               disabled
               name="phoneNumber"
               onChange={changeEventHandler}
+              className='focus-visible:ring-0'
             />
             <Label>Address </Label>
             <Input
@@ -109,6 +112,7 @@ const UserProfileForm = ({user, loading}) => {
               value={input.address}
               name="address"
               onChange={changeEventHandler}
+              className='focus-visible:ring-0'
             />
             <Label>City </Label>
             <Input
@@ -116,6 +120,7 @@ const UserProfileForm = ({user, loading}) => {
               placeholder="Enter your phone number"
               value={input.city}
               name="city"
+              className='focus-visible:ring-0'
               onChange={changeEventHandler}
             />
             <Label>Profile</Label>
@@ -124,6 +129,7 @@ const UserProfileForm = ({user, loading}) => {
                 type="file"
                 className="cursor-pointer"
                 onChange={changeFileHandler}
+                
               />
           </div>
           {loading ? (

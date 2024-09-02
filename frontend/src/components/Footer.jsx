@@ -11,10 +11,10 @@ const Footer = () => {
               <span className='font-bold text-4xl' >QuiclFeast</span>
               <ul className="flex items-center space-x-3 mt-3 text-xl">
                 <span>Social Links :</span>
-                <li className='hover:text-blue-600  bg-transparent ' ><FaFacebook /></li>
-                <li className='hover:text-blue-400  bg-transparent ' ><FaTwitter /></li>
-                <li className=' hover:text-purple-600  bg-transparent '><FaInstagramSquare /></li>
-                <li className='hover:text-blue-600  bg-transparent '><FaLinkedin /></li>
+                <li className='hover:text-blue-600 hover:bg-white bg-transparent rounded-lg ' ><FaFacebook /></li>
+                <li className='hover:text-blue-400 hover:bg-white  bg-transparent rounded-lg' ><FaTwitter /></li>
+                <li className=' hover:text-purple-600 hover:bg-white  bg-transparent rounded-lg'><FaInstagramSquare /></li>
+                <li className='hover:text-blue-600 hover:bg-white  bg-transparent rounded-lg'><FaLinkedin /></li>
               </ul>
             </div>
 

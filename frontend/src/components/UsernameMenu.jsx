@@ -12,8 +12,8 @@ import axios from 'axios'
 import { USER_API_END_POINT } from '@/utils/contants'
 import { setUser } from '@/redux/authSlice'
 
-
-const UsernameMenu = ({user, src}) => {
+const UsernameMenu = ({user}) => {
+  
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const logoutHandler = async () => {
@@ -36,17 +36,20 @@ const UsernameMenu = ({user, src}) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center px-3 font-bold text-white">
-        <Avatar className='flex items-center justify-center'>
-          {src ? (
-            <AvatarImage src={src} alt="@shadcn" />
+      <Avatar className="cursor-pointer">
+        {user?.avatar?.url ?(
+          <AvatarImage
+            src={user?.avatar?.url}
+            alt="" 
+          />
           ) : (
-            <FaUserCircle size={32}  /> // Size can be adjusted
+            <FaUserCircle size={32} /> // Size can be adjusted
           )}
         </Avatar>
         <span className="text-white cursor-pointer mx-2">{user?.name}</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem className='flex flex-col gap-2'>
+        <DropdownMenuItem className="flex flex-col gap-2">
           <Link to="/user-profile" className="font-bold hover:text-green-900">
             Profile
           </Link>

@@ -7,8 +7,9 @@ import MobileNavLinks from './MobileNavLinks'
 import { Avatar, AvatarImage } from './ui/avatar'
 import { FaUserCircle } from "react-icons/fa";
 import { Menu } from 'lucide-react';
+import { setUrl } from '@/redux/authSlice'
 
-const MobileNav = ({src, user}) => {
+const MobileNav = ({user}) => {
     const navigate = useNavigate();
   return (
     <Sheet>
@@ -20,14 +21,13 @@ const MobileNav = ({src, user}) => {
         <SheetTitle>
           {user ? (
             <span className="flex items-center font-bold gap-2 text-green-700 cursor-pointer">
-              {" "}
               <Avatar>
-                {src ? (
-                  <AvatarImage src={src} alt="@shadcn" />
+                {user?.avatar?.url ? (
+                  <AvatarImage src={user?.avatar?.url} alt="@shadcn" />
                 ) : (
                   <FaUserCircle size={32} /> // Size can be adjusted
                 )}
-              </Avatar>{" "}
+              </Avatar>
               {user?.name}
             </span>
           ) : (

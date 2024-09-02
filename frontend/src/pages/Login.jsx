@@ -77,7 +77,7 @@ const Login = () => {
             </Button>
           ) : (
             <Button type="submit" className="bg-green-600 hover:bg-green-900">
-              Sign up
+              login
             </Button>
           )}
           <p className='my-2'> new user? <span className='text-green-600 hover:underline'> <Link to='/register'>register here</Link> </span> </p>
