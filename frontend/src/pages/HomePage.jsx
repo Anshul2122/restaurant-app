@@ -1,9 +1,13 @@
 import React from 'react'
 import landingImage from "../assets/landing.png"
 import appDownloadImage from "../assets/appDownload.png"
+import Footer from '@/components/Footer';
+import Hero from '@/components/Hero';
 
 const HomePage = () => {
   return (
+    <>
+    <Hero/>
     <div className="flex flex-col  gap-12 ">
       <div className="bg-white rounded-lg shadow-md  flex flex-col gap-5 text-center -mt-16 ">
         <h1 className="text-5xl m-1 font-bold tracking-tight text-green-600 z-10">
@@ -20,6 +24,8 @@ const HomePage = () => {
         </div>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 }
 

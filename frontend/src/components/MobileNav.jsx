@@ -15,7 +15,7 @@ const MobileNav = ({user}) => {
     <Sheet>
       <></>
       <SheetTrigger>
-        <Menu className="text-white" />
+        <Menu className="text-black" />
       </SheetTrigger>
       <SheetContent className="space-y-3">
         <SheetTitle>

@@ -28,6 +28,9 @@ const authSlice = createSlice({
         setRestaurant:(state, action)=>{
             state.restaurant = action.payload;
         },
+        setAccessToken: (state, action) => {  // New reducer to set accessToken
+            state.accessToken = action.payload;
+        },
         setUrl: (state, action) => {
             // Ensure user and avatar object exist
             if (!state.user) {
@@ -41,5 +44,5 @@ const authSlice = createSlice({
     }
 })
 
-export const { setLoading, setUser, setError, setRestaurant, setUrl} = authSlice.actions;
+export const { setLoading, setUser, setError, setRestaurant, setUrl, setAccessToken} = authSlice.actions;
 export default authSlice.reducer;

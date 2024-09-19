@@ -31,11 +31,6 @@ const Hero = () => {
         <br />
         <div className="flex w-[40%] shadow-lg rounded-3xl items-center gap-4 mx-auto ">
         <SearchBar onSubmit={handleSearchSubmit}  placeholder='Search by City or Town'/>
-          <Button
-          className="rounded-full bg-green-700"
-          >
-            <Search className="h-5 w-5" />
-          </Button>
         </div>
       </div>
     </div>

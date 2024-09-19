@@ -1,5 +1,6 @@
 
 const Restaurant = require('../model/Restaurant.model');
+const { getDataUri } = require('../utils/dataUri');
 // const Order = require('../model/Order.model');
 
 exports.registerRestaurant = async(req, res)=>{
@@ -65,29 +66,50 @@ const removeDuplicateMenuItems = (newItems, existingItems) => {
     return Array.from(itemMap.values());
 };
 
-exports.updateRestaurant = async(req, res)=>{
+  exports.updateRestaurant = async(req, res)=>{
     try {
-        const restaurant = await Restaurant.findOne({user: req.user._id });
-        if(!restaurant){
-            return res.status(404).json({
-                message:"Restaurant not found",
-                success: false
-            });
+      const restaurant = await Restaurant.findOne({user: req.user._id });
+      if(!restaurant){
+        return res.status(404).json({
+          message:"Restaurant not found",
+          success: false
+        });
+      }
+      const images = req.files;
+      console.log("these are images : ",  images);
+      let myCloudd ;
+      if(images){
+        try{
+          const fileUri = getDataUri(images);
+          myCloudd = await cloudinary.uploader.upload(fileUri.content);
+          } catch(e){
+            console.log('error in uploading images to cloudinary: ', e);
+            return res.status(500).json({ message: "Error uploading images to cloudinary" , success:false});
+          }
         }
-        restaurant.deliveryPrice = req.body.deliveryPrice;
-        restaurant.estimatedDeliveryTime = req.body.estimatedDeliveryTime;
-        restaurant.cuisines = Array.from(new Set([...req.body.cuisines, ...restaurant.cuisines]));
-        restaurant.menuItems = removeDuplicateMenuItems(req.body.menuItems,restaurant.menuItems);
-        restaurant.lastUpdate = new Date();
+        if(restaurant.deliveryPrice)  restaurant.deliveryPrice = req.body.deliveryPrice;
+        if(restaurant.estimatedDeliveryTime) restaurant.estimatedDeliveryTime = req.body.estimatedDeliveryTime;
+        if(restaurant.cuisines) restaurant.cuisines = Array.from(new Set([...req.body.cuisines, ...restaurant.cuisines]));
+        if(restaurant.menuItems) restaurant.menuItems = removeDuplicateMenuItems(req.body.menuItems,restaurant.menuItems);
+        if(restaurant.lastUpdate) restaurant.lastUpdate = new Date();
+
+        if(myCloudd){
+          restaurant.imageurl ={
+            public_id:myCloudd.public_id,
+            url:myCloudd.secure_url,
+          };
+        }
+        console.log(restaurant,imageurl.url);
 
         await restaurant.save();
+
         return res.status(200).json({
-            message:"Restaurant updated successfully",
-            success: true,
-            restaurant
+          message:"Restaurant updated successfully",
+          success: true,
+          restaurant
         });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Something went wrong" });       
-    }
-}
+      } 
+  }

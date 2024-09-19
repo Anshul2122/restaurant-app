@@ -8,13 +8,13 @@ const Footer = () => {
         <div className="px-2 mx-auto sm:px-1 lg:px-8 max-w-7xl">
           <div className="grid grid-cols-2 md:col-span-3 lg:grid-cols-6 gap-y-1 gap-x-2">
             <div className="col-span-2 md:col-span-1 lg:col-span-2 lg:pr-4">
-              <span className='font-bold text-4xl' >QuiclFeast</span>
+              <span className='font-bold text-4xl' >QuickFeast</span>
               <ul className="flex items-center space-x-3 mt-3 text-xl">
                 <span>Social Links :</span>
-                <li className='hover:text-blue-600 hover:bg-white bg-transparent rounded-lg ' ><FaFacebook /></li>
-                <li className='hover:text-blue-400 hover:bg-white  bg-transparent rounded-lg' ><FaTwitter /></li>
-                <li className=' hover:text-purple-600 hover:bg-white  bg-transparent rounded-lg'><FaInstagramSquare /></li>
-                <li className='hover:text-blue-600 hover:bg-white  bg-transparent rounded-lg'><FaLinkedin /></li>
+                <li className='rounded-lg ' ><FaFacebook /></li>
+                <li className='rounded-lg' ><FaTwitter /></li>
+                <li className='bg-transparent rounded-lg'><FaInstagramSquare /></li>
+                <li className='bg-transparent rounded-lg'><FaLinkedin /></li>
               </ul>
             </div>
 

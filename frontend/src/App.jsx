@@ -10,18 +10,20 @@ import Login from './pages/Login';
 import RestaurantRegister from './pages/RestaurantRegister';
 import ManageRestaurant from './pages/ManageRestaurant';
 import SearchPage from './pages/SearchPage';
+import DetailPage from './pages/DetailPage';
 
 function App() {
 
   return (
     <Routes>
-      <Route path='/' element={<Layout showHero={true}><HomePage/></Layout>}/>
-      <Route path='/register' element={<Register/>} />
-      <Route path='/login' element={<Login/>} />
+      <Route path='/' element={<HomePage/>}/>
+      <Route path='/register' element={<Layout><Register/></Layout>} />
+      <Route path='/login' element={<Layout><Login/></Layout>} />
       <Route path='/registerRestaurant' element={<RestaurantRegister/>} />
       <Route path='/userRestaurant' element={<Layout><ManageRestaurant/></Layout>}/>
       <Route path='/search/:city' element={<Layout><SearchPage/></Layout>} />
       <Route path='/user-profile' element={<Layout><UserProfilePage/></Layout>} />
+      <Route path='/details/:restaurantId' element={<Layout><DetailPage/></Layout>} />
 
     </Routes>
   )

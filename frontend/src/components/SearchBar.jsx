@@ -4,9 +4,9 @@ import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem } from './ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {Search } from 'lucide-react';
 import { Button } from './ui/button';
 import { MdCancel } from "react-icons/md";
+import { Search } from 'lucide-react';
 
 const formSchema = z.object({
   searchQuery : z.string({
@@ -30,13 +30,12 @@ const SearchBar = ({onSubmit, onReset,placeholder, searchQuery}) => {
     }
   };
   return (
-    <div className="w-full flex flex-row ">
+    <div className="w-full flex flex-row">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} // Yeh form data submit karega aur onSubmit function ko trigger karega
         className={`flex w-full items-center gap-3 justify-between flex-row  rounded-full p-3 ${
           form.formState.errors.searchQuery && "border-red-500"
         }`}>
-        
           <FormField 
             control={form.control}
             name='searchQuery' 
@@ -45,7 +44,7 @@ const SearchBar = ({onSubmit, onReset,placeholder, searchQuery}) => {
               
               <FormControl>
                 <Input {...field} 
-                  className="border-none shadow-none text-xl rounded-full focus-visible:ring-0"
+                  className="border-none shadow-none text-xl border border-b-2 bg-gray-200 rounded-full focus-visible:ring-0"
                   placeholder={placeholder}
                 />
               </FormControl>
@@ -54,15 +53,16 @@ const SearchBar = ({onSubmit, onReset,placeholder, searchQuery}) => {
           {form.formState.isDirty && (
             <Button onClick={handleReset} type='button'  className='rounded-full bg-inherit hover:bg-inherit font-extrabold absolute right-[490px]'>
               <MdCancel className='text-gray-300 text-xl' />
-            </Button>)
-           }
-            
+          </Button>
+          
+          )
+         }  
+         <Button
+          className="rounded-full bg-green-700"
+          ><Search/></Button>
         </form>
       </Form>
-      
     </div>
-
-        
   )
 }
 

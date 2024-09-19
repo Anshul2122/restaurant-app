@@ -3,11 +3,18 @@
 const mongoose = require("mongoose");
 
 const MenuItemSchema = new mongoose.Schema({
+    _id:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        default: () => new mongoose.Types.ObjectId(),
+    },
     name:{
         type: String,
+        required: true,
     },
     price:{
         type: Number,
+        required: true,
 
     },
 });
@@ -38,8 +45,13 @@ const restaurantSchema = new mongoose.Schema({
         MenuItemSchema
     ],
     imageurl:{
-        public_id: String,
-        url: String,
+        public_id: {
+            type: String,
+            required: true,
+        },
+        url:{
+            type: String,
+        },
     },
     lastUpdate:{
         type: Date,

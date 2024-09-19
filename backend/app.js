@@ -7,6 +7,7 @@ const cors = require('cors');
 const user = require('./routes/user.route');
 const Myrestaurant = require('./routes/MyRestaurant.route')
 const restaurant = require('./routes/restaurant.route');
+const order = require("./routes/Order.Route");
 
 const app = express();
 
@@ -46,5 +47,6 @@ app.use((req, res, next) => {
 app.use('/api/v1/user', user);
 app.use('/api/v1/my/restaurant', Myrestaurant);
 app.use('/api/restaurant',restaurant);
+app.use('/api/order', order);
 
 module.exports = app;

@@ -9,8 +9,8 @@ const MainNav = ({user}) => {
     <span className='flex space-x-2 items-center'>
         {user? <UsernameMenu user={user}/> :
         <div>
-          <Button onClick={()=>navigate('/login')} className='text-white bg-inherit hover:bg-white hover:text-green-600 rounded-3xl'>Login</Button>
-          <Button onClick={()=>navigate('/register')} className='text-white bg-inherit hover:bg-white hover:text-green-600 rounded-3xl'>Register</Button>
+          <Button onClick={()=>navigate('/login')} className='text-black bg-inherit hover:bg-white hover:text-green-600 rounded-3xl'>Login</Button>
+          <Button onClick={()=>navigate('/register')} className='text-black bg-inherit hover:bg-white hover:text-green-600 rounded-3xl'>Register</Button>
         </div>
 
         

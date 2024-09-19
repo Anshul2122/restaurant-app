@@ -1,3 +1,4 @@
+import Navbar from '@/components/Navbar';
 import OrderStatus from '@/components/OrderStatus';
 import { Button } from '@/components/ui/button'
 import ManageRestaurantForm from '@/forms/manageRestuarantForm/ManageRestaurantForm';

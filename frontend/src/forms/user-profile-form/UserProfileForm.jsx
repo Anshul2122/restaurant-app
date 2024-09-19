@@ -10,10 +10,11 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { Label } from '@/components/ui/label';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Plus } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 
-const UserProfileForm = ({user, loading}) => {
+const UserProfileForm = ({user, loading, onSave}) => {
   const [input, setInput] = useState({
     name:user.name,
     email:user.email,
@@ -27,6 +28,7 @@ const UserProfileForm = ({user, loading}) => {
   const changeEventHandler = (e) =>{
     setInput({...input, [e.target.name]:e.target.value});
   };
+
 
   const changeFileHandler = (e)=>{
     setInput({...input, file:e.target.files?.[0]});
@@ -76,7 +78,17 @@ const UserProfileForm = ({user, loading}) => {
     <div className='flex items-center justify-center w-[100%]  '>
       <form onSubmit={submitHandler}
       className="w-1/2 border border-gray-200 rounded-md p-4 my-10 shadow-2xl">
-        <div className="my-2 ">
+        <div className="mb-5 ">
+        <Label>Profile</Label>
+              <Avatar className='relative w-20 h-20'>
+                <AvatarImage src = {user?.avatar?.url}/>
+                <AvatarFallback>CN</AvatarFallback>
+                <input type='file' className='hidden'/>
+                <div onClick={() => imageRef.current?.click()} className='absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-50 rounded-full cursor-pointer'>
+                
+                <Plus className='text-white w-6 h-8'/>
+                </div>
+              </Avatar>
             <Label >Full Name</Label>
             <Input
               type="text"
@@ -123,14 +135,7 @@ const UserProfileForm = ({user, loading}) => {
               className='focus-visible:ring-0'
               onChange={changeEventHandler}
             />
-            <Label>Profile</Label>
-              <Input
-                accept="image/*"
-                type="file"
-                className="cursor-pointer"
-                onChange={changeFileHandler}
-                
-              />
+            
           </div>
           {loading ? (
             <Button>
