@@ -7,19 +7,18 @@ export const useCreateCheckoutSession = () => {
     const accessToken = useSelector((state) => state.auth.accessToken);
     const createCheckoutSessionRequest = async(checkoutSessionRequest)=>{
 
-        const res = await axios.post(`${CHECKOUT_API_END_POINT}/checkout/create-checkout-session`, {
+        const res = await axios.post(`${CHECKOUT_API_END_POINT}/create-checkout-session`, checkoutSessionRequest, {
             method:"POST",
             headers:{
                 Authorization:`Bearer ${accessToken}`,
                 "Content-Type":"application/json",
             },
-            body:JSON.stringify(checkoutSessionRequest),
         });
 
-        if(!res.ok){
+        if(!res.data){
             throw new Error("Error creating checkout session")
         }
-        return res.json();
+        return res.data;
     };
 
     const {mutateAsync:createCheckoutSession, isloading, error, reset}= useMutation(createCheckoutSessionRequest);

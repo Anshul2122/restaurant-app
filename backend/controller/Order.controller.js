@@ -21,14 +21,8 @@ const FRONTEND_URL = process.env.FRONTEND_URL;
 
 const createCheckoutSession = async(req,res)=>{
   try {
-    // console.log("heelo ")
-    // console.log(" ye hai req body isme sara body ka data aana chaiye yaar: ", req.body)
-    const { checkoutSessionRequest } = req.body;
-    // console.log("yhe hai checkout sessions request: ",checkoutSessionRequest)
-    const restaurant = await Restaurant.findById(checkoutSessionRequest.restaurantId);
-    // console.log("checkout session request: ", checkoutSessionRequest);
-    // console.log("cartItems: ", checkoutSessionRequest.cartItems);
-    // console.log("resturantId : ", checkoutSessionRequest.restaurantId);
+    const restaurant = await Restaurant.findById(req.body.restaurantId);
+
     if(!restaurant){
       throw new Error("restaurant not found");
     }    
@@ -37,13 +31,16 @@ const createCheckoutSession = async(req,res)=>{
       restaurant:restaurant,
       user:req.userId,
       status:"placed",
-      deliveryDetails:checkoutSessionRequest.deliveryDetails,
-      cartItems:checkoutSessionRequest.cartItems,
+      deliveryDetails:req.body.deliveryDetails,
+      cartItems:req.body.cartItems,
       createdAt:new Date(),
     })
 
     const lineItems = createLineItems(
-      checkoutSessionRequest,
+      {
+        cartItems: req.body.cartItems,
+        restaurantId: req.body.restaurantId,
+    },
       restaurant.menuItems,
     );
 
@@ -67,17 +64,14 @@ const createCheckoutSession = async(req,res)=>{
   }
 };
 
-const createLineItems = (checkoutSessionRequest, menuItems)=>{
+const createLineItems = (checkoutSessionRequest="", menuItems)=>{
   const lineItems = checkoutSessionRequest.cartItems.map((cartItem)=>{
-    // console.log("cart items id : ",cartItem._id);
     const menuItem = menuItems.find((item) => {
-      // console.log("items id: ", item._id);
-      return item._id.toString() === cartItem._id.toString()
+      return item._id.toString() === cartItem.menuItemId.toString()
     });
-    // console.log("menuItem: ", menuItem)
-    if(!menuItem){
-      throw new Error("menu item not found");
-    }
+    
+    if(!menuItem) throw new Error("menu item not found");
+    
     const line_items={
       price_data:{
         currency:"inr",
@@ -88,10 +82,9 @@ const createLineItems = (checkoutSessionRequest, menuItems)=>{
       },
       quantity: parseInt(cartItem.quantity),
     };
-   // console.log("line_items: ", line_items)
+    
     return line_items;
   });
-  //console.log("line items: ", lineItems);
 
   return lineItems;
 };
@@ -113,8 +106,7 @@ const createSession = async(lineItems, restaurantId, orderId)=>{
     success_url: `${FRONTEND_URL}/order-status?success=true`,
     cancel_url: `${FRONTEND_URL}/details/${restaurantId}?cancelled=true`,
   });
-  //console.log("session data: " ,  sessionData)
-  // console.log("session id: ",sessionData.id)
+
   return sessionData;
 }
 

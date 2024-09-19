@@ -5,6 +5,6 @@ const { isAuthenticated } = require('../middlewares/auth');
 const router = express.Router();
 
 
-router.route("/checkout/create-checkout-session").post(createCheckoutSession);
+router.route("/create-checkout-session").post( createCheckoutSession);
 
 module.exports = router;

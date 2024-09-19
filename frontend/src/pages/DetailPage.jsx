@@ -68,9 +68,8 @@ const DetailPage = () => {
 
   const onCheckout = async(userFormData)=>{
     console.log("use form Data: ",userFormData)
-    if(!restaurant){
-      return;
-    }
+    if(!restaurant) return;
+    
     const checkoutData = {
       cartItems:cartItems.map((cartItem)=>({
         menuItemId:cartItem._id,

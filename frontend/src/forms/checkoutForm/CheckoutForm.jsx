@@ -8,14 +8,6 @@ import { Loader2} from 'lucide-react';
 
 const CheckoutForm = ({user, isLoading, makePayment, onCheckout}) => {
 
-  // const formDataToJson = (formData) => {
-  //   const object = {};
-  //   formData.forEach((value, key) => {
-  //     object[key] = value;
-  //   });
-  //   return object;
-  // };
-
   const [input, setInput] = useState({
     name:user.name,
     email:user.email,
@@ -37,12 +29,7 @@ const CheckoutForm = ({user, isLoading, makePayment, onCheckout}) => {
     formData.append('city', input.city);
     formData.append('phoneNumber', input.phoneNumber);
 
-    // console.log(input);
     onCheckout(input);
-
-    // Log formData to check if values are appended correctly
-    // const formDataJson = formDataToJson(formData);
-    // console.log("Form Data as JSON: ", formDataJson);
   }
 
     
@@ -52,7 +39,7 @@ const CheckoutForm = ({user, isLoading, makePayment, onCheckout}) => {
 		  <h1 className='text-3xl font-bold'>Confirm Delivery Details</h1>
 		  <span>view and change your address here</span>
 		  <div className='flex items-center justify-center w-[100%]  '>
-        <form onSubmit={submitHandler}
+        <form onSubmit={submitHandler} // Check
           className="w-1/2 border border-gray-200 rounded-md p-4 my-10 shadow-2xl">
           <div className="mb-5 ">
             <Label >Full Name</Label>
@@ -108,7 +95,7 @@ const CheckoutForm = ({user, isLoading, makePayment, onCheckout}) => {
               loading...
             </Button>
             ) : (
-            <Button type="submit" onClick={makePayment} className="bg-green-600 hover:bg-green-900">
+            <Button type="submit" makePayment={makePayment} className="bg-green-600 hover:bg-green-900">
               confirm order
             </Button>
           )} 

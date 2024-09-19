@@ -22,16 +22,14 @@ const CheckoutButton = ({ cartItems, restaurantId, onCheckout}) => {
         restaurantId: restaurantId, // Ensure this is set correctly
       },
     };
-    // console.log("checkout Session Request:   ",body.checkoutSessionRequest);
-    // console.log("checkout Session Request: cart:   ",body.checkoutSessionRequest.cartItems);
-    // console.log("checkout Session Request: restaurantId:  ",body.checkoutSessionRequest.restaurantId);
     try {
-      const response = await axios.post(`${CHECKOUT_API_END_POINT}/checkout/create-checkout-session`,
+      const response = await axios.post(`${CHECKOUT_API_END_POINT}/create-checkout-session`,
         body,
         {
         headers:{
           "Content-Type":"application/json",
         },
+          withCredentials: true,
       });
       const url = response.data.url;
       // console.log("url: ", url);
