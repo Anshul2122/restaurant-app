@@ -3,20 +3,57 @@ const Restaurant = require("../model/Restaurant.model");
 const Order = require("../model/Order.model");
 const STRIPE = process.env.STRIPE_API_KEY;
 const stripe = require('stripe')(STRIPE);
-
+const  STIPE_ENDPOINT_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
 const FRONTEND_URL = process.env.FRONTEND_URL;
+ 
+const getMyOrders = async(req, res)=>{
+  try {
+    const userId = req.user._id;
+    // console.log("user id: ",userId);
+    
+    const orders = await Order.find({user:userId}).populate("restaurant").populate("user");
+    // console.log(" get my orders : ",orders);
+    return res.json(orders);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({message:"something went wrong", success:false});
+  }
+};
 
-// exports.getMyOrder = async(req, res)=>{
-//   try {
-//     const orders = await Order.find({user:req.userId}).populate("restaurant").populate("user");
+const stripeWebhookHandler = async(req, res)=>{
 
-//     return res.json(orders);
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({message:"something went wrong", success:false});
-//   }
-// };
+  let event;
+  try {
+    const rawBody = req.body.toString('utf8');
+    
+    const sig = req.headers['stripe-signature'];
+    
+    event = stripe.webhooks.constructEvent(
+      rawBody,
+      sig,
+      STIPE_ENDPOINT_SECRET,
+    );
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json(`webhook error: ${error.message}`);
+  }
 
+  console.log("event type", event.type)
+
+  if(event.type === 'checkout.session.completed') {
+    const order = await Order.findById(event.data.object.metadata?.restaurantId);
+    if(!order){
+      return res.status(404).json({message:"Order not found"});
+    }
+    console.log("order", order)
+    order.totalAmount = ((event.data.object.amount_total)/100).toFixed(2);
+    order.status = 'paid';
+
+    await order.save();
+  }
+
+  res.status(200).json({message:"payment successful ", success: true});
+}
 
 
 const createCheckoutSession = async(req,res)=>{
@@ -27,14 +64,18 @@ const createCheckoutSession = async(req,res)=>{
       throw new Error("restaurant not found");
     }    
 
+    console.log("restaurant: ",restaurant);
+
     const newOrder = new Order({
       restaurant:restaurant,
-      user:req.userId,
+      user:restaurant.user,
       status:"placed",
       deliveryDetails:req.body.deliveryDetails,
       cartItems:req.body.cartItems,
       createdAt:new Date(),
     })
+
+    console.log("newOrder: ",newOrder);
 
     const lineItems = createLineItems(
       {
@@ -110,4 +151,4 @@ const createSession = async(lineItems, restaurantId, orderId)=>{
   return sessionData;
 }
 
-module.exports ={ createCheckoutSession };
+module.exports ={getMyOrders, createCheckoutSession, stripeWebhookHandler };

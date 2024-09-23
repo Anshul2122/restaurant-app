@@ -2,6 +2,7 @@ const express = require('express');
 
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 //importing routes
 const user = require('./routes/user.route');
@@ -15,6 +16,7 @@ if(process.env.NODE_ENV !== 'production'){
     require("dotenv").config({path:"./config/config.env"});
 }
 //middleware
+app.post('/api/order/checkout/webhook', bodyParser.raw({ type: 'application/json' }));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(cookieParser());
@@ -22,9 +24,11 @@ app.use(cookieParser());
 const corsOptions = {
     origin: process.env.FRONTEND_URL,
     credentials:true,
-    method:["GET", "POST", "PUT", "DELETE"],
+    methods:["GET", "POST", "PUT", "DELETE"],
 }
 app.use(cors(corsOptions));
+
+
 
 
 

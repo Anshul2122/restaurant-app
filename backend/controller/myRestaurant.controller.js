@@ -1,4 +1,4 @@
-
+const Order = require('../model/Order.model');
 const Restaurant = require('../model/Restaurant.model');
 const { getDataUri } = require('../utils/dataUri');
 // const Order = require('../model/Order.model');
@@ -113,3 +113,23 @@ const removeDuplicateMenuItems = (newItems, existingItems) => {
         res.status(500).json({ message: "Something went wrong" });       
       } 
   }
+
+exports.getMyRestaurantOrders = async(req, res)=>{
+  try {
+    const restaurant = await Restaurant.findOne({user: req.user._id });
+    if(!restaurant){
+      return res.status(404).json({ message:"Restaurant not found",success: false})
+    }
+
+    const orders = await Order.find({restaurant:restaurant._id}).populate("restaurant").populate("user");
+
+    return res.status(200).json({
+      message:"Restaurant updated successfully",
+      success: true,
+      orders
+    });
+  } catch (error) {
+    console.log("error: ",error);
+    return res.status(500).json({ message: "Something went wrong"});
+  }
+}

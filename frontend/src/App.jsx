@@ -11,6 +11,7 @@ import RestaurantRegister from './pages/RestaurantRegister';
 import ManageRestaurant from './pages/ManageRestaurant';
 import SearchPage from './pages/SearchPage';
 import DetailPage from './pages/DetailPage';
+import OrderStatus from './pages/OrderStatus';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
       <Route path='/search/:city' element={<Layout><SearchPage/></Layout>} />
       <Route path='/user-profile' element={<Layout><UserProfilePage/></Layout>} />
       <Route path='/details/:restaurantId' element={<Layout><DetailPage/></Layout>} />
+      <Route path='/order-status' element={<Layout><OrderStatus/></Layout>}/>
 
     </Routes>
   )

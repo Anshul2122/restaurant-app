@@ -46,7 +46,7 @@ const UsernameMenu = ({user}) => {
             <FaUserCircle size={32} /> // Size can be adjusted
           )}
         </Avatar>
-        <span className="text-white cursor-pointer mx-2">{user?.name}</span>
+        <span className="text-white cursor-pointer mx-2 hover:underline">{user?.name}</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem className="flex flex-col gap-2">

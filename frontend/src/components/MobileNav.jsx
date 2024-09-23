@@ -15,7 +15,7 @@ const MobileNav = ({user}) => {
     <Sheet>
       <></>
       <SheetTrigger>
-        <Menu className="text-black" />
+        <Menu className="text-white" />
       </SheetTrigger>
       <SheetContent className="space-y-3">
         <SheetTitle>
@@ -36,8 +36,8 @@ const MobileNav = ({user}) => {
         </SheetTitle>
         <Separator />
         <SheetDescription className="flex flex-col gap-4">
-          {user ? (
-            <MobileNavLinks />
+          {user ? (             
+             <MobileNavLinks />
           ) : (
             <div className='flex gap-3 flex-col'>
               <Button

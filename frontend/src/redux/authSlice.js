@@ -7,6 +7,7 @@ const authSlice = createSlice({
         user:null,
         error:null,
         restaurant:null,
+        order:null,
         user: {
             avatar: {
                 public_id: "sample_id",
@@ -28,6 +29,9 @@ const authSlice = createSlice({
         setRestaurant:(state, action)=>{
             state.restaurant = action.payload;
         },
+        setOrder:(state, action)=>{
+            state.order = action.payload;
+        },
         setAccessToken: (state, action) => {  // New reducer to set accessToken
             state.accessToken = action.payload;
         },
@@ -44,5 +48,5 @@ const authSlice = createSlice({
     }
 })
 
-export const { setLoading, setUser, setError, setRestaurant, setUrl, setAccessToken} = authSlice.actions;
+export const { setLoading, setUser, setError, setRestaurant, setOrder, setUrl, setAccessToken} = authSlice.actions;
 export default authSlice.reducer;

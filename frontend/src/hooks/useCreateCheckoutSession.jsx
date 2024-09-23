@@ -13,6 +13,7 @@ export const useCreateCheckoutSession = () => {
                 Authorization:`Bearer ${accessToken}`,
                 "Content-Type":"application/json",
             },
+            withCredentials:true,
         });
 
         if(!res.data){
